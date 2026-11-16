@@ -1,28 +1,28 @@
 #!/usr/bin/env python3
 """
-lego_to_stl.py - LEGO set or LDraw model -> printable STL / 3MF files.
+brickprint.py - BrickPrint: LEGO set or LDraw model -> printable STL / 3MF files.
 
 Two ways to run it:
 
   A) From a set number (parts list comes from Rebrickable):
        export REBRICKABLE_KEY=your_api_key        # free at rebrickable.com
-       python3 lego_to_stl.py 75192-1
-       python3 lego_to_stl.py 42233 --3mf
+       python3 brickprint.py 75192-1
+       python3 brickprint.py 42233 --3mf
 
   B) From an LDraw model file (.mpd / .ldr), e.g. from omr.ldraw.org:
-       python3 lego_to_stl.py 75033-1.mpd
-       python3 lego_to_stl.py 75033-1.mpd --3mf --by-colour --bed 256 256
+       python3 brickprint.py 75033-1.mpd
+       python3 brickprint.py 75033-1.mpd --3mf --by-colour --bed 256 256
      This also writes assembled.stl: every part in its modelled position.
 
   Either way, add --instructions to also download the official LEGO building
   instruction PDFs, or use --instructions-only to download just those:
-       python3 lego_to_stl.py 42233 --instructions-only
+       python3 brickprint.py 42233 --instructions-only
 
 Outputs (in --out, default: the set number or model name):
     <part>.stl         one STL per unique part (studs up, flat on the bed)
     manifest.csv       parts, quantities, colours, status
     assembled.stl      whole model (model-file mode only)
-    plate_NN.3mf       --3mf: every part instance on bed-sized plate(s), auto-oriented
+    plate_NN.3mf       --3mf: every part instance on bed-sized plate(s), studs up by default
     plate_NN.stl       --plates: same layout as STL
                        (--by-colour makes plate_<colour>_NN files instead)
 
@@ -422,7 +422,7 @@ def orient_for_printing(tris, mode, k):
 def write_stl(path, tris_iter, count):
     """Binary STL from triangles already in mm."""
     with open(path, "wb") as f:
-        f.write(b"lego_to_stl".ljust(80, b"\0"))
+        f.write(b"brickprint".ljust(80, b"\0"))
         f.write(struct.pack("<I", count))
         for a, b, c in tris_iter:
             n = _cross(_sub(b, a), _sub(c, a))
@@ -555,7 +555,7 @@ def main():
     ap.add_argument("source", help="set number (e.g. 75192-1) or an LDraw .mpd/.ldr file")
     ap.add_argument("--out", default=None, help="output folder")
     ap.add_argument("--3mf", dest="three_mf", action="store_true",
-                    help="write 3MF build plate(s) with every part instance, auto-oriented")
+                    help="write 3MF build plate(s) with every part instance")
     ap.add_argument("--plates", action="store_true", help="write the same plates as STL files")
     ap.add_argument("--by-colour", action="store_true", help="separate plates per colour")
     ap.add_argument("--bed", nargs=2, type=float, default=[220, 220], metavar=("W", "D"),

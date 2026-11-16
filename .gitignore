@@ -1,0 +1,13 @@
+# Downloaded LDraw library cache
+ldraw_cache/
+
+# Python
+__pycache__/
+*.pyc
+
+# Generated output (add your own output folders here)
+*.stl
+*.3mf
+manifest.csv
+plates.csv
+instructions/
