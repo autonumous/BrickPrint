@@ -1,5 +1,4 @@
-# BuildingBlockDownloader
-- lego_to_stl
+# lego_to_stl
 
 Turn a LEGO set into 3D-printable files.
 
@@ -293,4 +292,4 @@ Make sure you are running the latest `lego_to_stl.py`, with no older copies alon
 
 LEGO® is a trademark of the LEGO Group, which does not sponsor, authorise or endorse this project. This tool is intended for personal use, so check the terms of any data source before sharing or selling what you generate.
 
-**Licence:** add your licence here (for example MIT).
+**Licence:** the code in this repository is released under the [MIT Licence](LICENSE). The LDraw parts library and Rebrickable data it downloads at run time are not part of this repository and remain under their own licences and terms, as described above.
