@@ -11,3 +11,5 @@ __pycache__/
 manifest.csv
 plates.csv
 instructions/
+
+.DS_Store
